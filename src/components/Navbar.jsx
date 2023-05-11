@@ -21,11 +21,13 @@ export default function Navbar() {
         label="Manage"
         value="manage"
         icon={<Storage />}
+        href="/Manage"
       />
       <BottomNavigationAction
         label="Charts"
         value="charts"
         icon={<BarChartIcon />}
+        href="/Charts"
       />
     </BottomNavigation>
   );
