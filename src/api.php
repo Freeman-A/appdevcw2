@@ -2,7 +2,6 @@
 
     include "connection.php";
     
-
     // $claimant['ID'] = $row['ID'];
     // $claimant['KIDSDRIV'] = $row['KIDSDRIV'];
     // $claimant['BIRTH'] = $row['BIRTH'];

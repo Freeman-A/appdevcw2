@@ -1,0 +1,6 @@
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/CVS",
+    "**/.htaccess"  // Add this line
+]
