@@ -1,21 +1,7 @@
 <?php 
 
-    declare(strict_types=1); 
-    spl_autoload_register(function ($class) {
-        require __DIR__ . "/$class.php"; 
-    });
-
-    $parts = explode("/", $_SERVER["REQUEST_URI"]); 
-
-    if ($parts[1] != "api"){
-        http_response_code(404); 
-        exit;
-    }
-
-    $id = $parts[2] ?? null;
+    include "connection.php";
     
-    $controller = new Controller; 
-    $controller->processRequest($_SERVER["REQUEST_METHOD"], $id); 
 
     // $claimant['ID'] = $row['ID'];
     // $claimant['KIDSDRIV'] = $row['KIDSDRIV'];
