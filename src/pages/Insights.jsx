@@ -1,7 +1,7 @@
 import Navbar from '../components/Navbar.jsx';
 
-function Charts() {
+function Insights() {
   return <Navbar />;
 }
 
-export default Charts;
+export default Insights;

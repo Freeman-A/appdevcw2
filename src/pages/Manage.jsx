@@ -1,14 +1,26 @@
 import { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar.jsx';
-import { RepeatOneSharp } from '@mui/icons-material';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  ButtonGroup,
+} from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import Navbar from '../components/Navbar';
 
 function Manage() {
-  const [status, setStatus] = useState('idle');
+  const [isFetching, setIsFetching] = useState(true);
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      setStatus('fetching');
+      setIsFetching(true);
       const response = await fetch('http://localhost/src/api', {
         headers: {
           'Content-Type': 'application/json',
@@ -16,19 +28,62 @@ function Manage() {
       });
       const data = await response.json();
       setData(data.data);
-      setStatus('fetched');
+      setIsFetching(false);
     };
 
     fetchData();
   }, []);
 
+  if (isFetching === true) {
+    return <h1>Loading</h1>;
+  }
+
   return (
     <div>
       <Navbar />
+      <br />
 
-      {data.map((row) => {
-        return <h1> {row.HOMEKIDS} </h1>;
-      })}
+      <div>
+        <ButtonGroup
+          variant="contained"
+          aria-label="outlined primary button group"
+        >
+          <Button startIcon={<ArrowBackIcon />} size="small"></Button>
+          <Button endIcon={<ArrowForwardIcon />} size="small"></Button>
+        </ButtonGroup>
+      </div>
+
+      <br />
+      <div>
+        <TableContainer component={Paper}>
+          <Table sx={{ maxWidth: 300 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                {Object.keys(data[0]).map((key, index) => {
+                  return (
+                    <TableCell align="left" key={index}>
+                      {key}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.slice(1).map((row) => {
+                return (
+                  <TableRow align="left" key={row.ID}>
+                    {Object.values(row).map((value, index) => {
+                      return <TableCell key={index}>{value}</TableCell>;
+                    })}
+                  </TableRow>
+                );
+              })}
+
+              <TableRow></TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
     </div>
   );
 }

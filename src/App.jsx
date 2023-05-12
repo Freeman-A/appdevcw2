@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Manage from './pages/Manage.jsx';
-import Charts from './pages/Charts.jsx';
+import Insights from './pages/Insights.jsx';
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to={'/Manage'} />} />
         <Route path="/Manage" element={<Manage />} />
-        <Route path="/Charts" element={<Charts />} />
+        <Route path="/Insights" element={<Insights />} />
       </Routes>
     </BrowserRouter>
   );

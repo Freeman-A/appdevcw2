@@ -13,9 +13,12 @@ export default function Navbar() {
 
   return (
     <BottomNavigation
-      sx={{ position: 'relative' }}
+      showLabels
       value={value}
-      onChange={handleChange}
+      sx={{ position: 'relative' }}
+      onChange={(event, newValue) => {
+        setValue(newValue);
+      }}
     >
       <BottomNavigationAction
         label="Manage"
@@ -24,10 +27,10 @@ export default function Navbar() {
         href="/Manage"
       />
       <BottomNavigationAction
-        label="Charts"
+        label="Insights"
         value="charts"
         icon={<BarChartIcon />}
-        href="/Charts"
+        href="/Insights"
       />
     </BottomNavigation>
   );
