@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ReactPaginate from 'react-paginate';
 import {
   Table,
   TableBody,
@@ -10,6 +11,7 @@ import {
   Button,
   ButtonGroup,
 } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Navbar from '../components/Navbar';
@@ -35,7 +37,11 @@ function Manage() {
   }, []);
 
   if (isFetching === true) {
-    return <h1>Loading</h1>;
+    return (
+      <LoadingButton loading variant="outlined">
+        Loading
+      </LoadingButton>
+    );
   }
 
   return (
@@ -43,15 +49,15 @@ function Manage() {
       <Navbar />
       <br />
 
-      <div>
+      {/* <div>
         <ButtonGroup
           variant="contained"
           aria-label="outlined primary button group"
         >
           <Button startIcon={<ArrowBackIcon />} size="small"></Button>
-          <Button endIcon={<ArrowForwardIcon />} size="small"></Button>
+          </ReactPaginate>
         </ButtonGroup>
-      </div>
+      </div> */}
 
       <br />
       <div>
@@ -69,7 +75,7 @@ function Manage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.slice(1).map((row) => {
+              {/* {data.slice(1).map((row) => {
                 return (
                   <TableRow align="left" key={row.ID}>
                     {Object.values(row).map((value, index) => {
@@ -77,9 +83,7 @@ function Manage() {
                     })}
                   </TableRow>
                 );
-              })}
-
-              <TableRow></TableRow>
+              })} */}
             </TableBody>
           </Table>
         </TableContainer>
