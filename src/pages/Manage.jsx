@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import ReactPaginate from 'react-paginate';
 import {
   Table,
   TableBody,
@@ -8,17 +7,19 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Button,
-  ButtonGroup,
+  Stack,
+  Pagination,
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Navbar from '../components/Navbar';
 
 function Manage() {
   const [isFetching, setIsFetching] = useState(true);
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 10;
+  const startIndex = (page - 1) * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,6 +37,10 @@ function Manage() {
     fetchData();
   }, []);
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
   if (isFetching === true) {
     return (
       <LoadingButton loading variant="outlined">
@@ -48,16 +53,6 @@ function Manage() {
     <div>
       <Navbar />
       <br />
-
-      {/* <div>
-        <ButtonGroup
-          variant="contained"
-          aria-label="outlined primary button group"
-        >
-          <Button startIcon={<ArrowBackIcon />} size="small"></Button>
-          </ReactPaginate>
-        </ButtonGroup>
-      </div> */}
 
       <br />
       <div>
@@ -75,18 +70,39 @@ function Manage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {/* {data.slice(1).map((row) => {
-                return (
-                  <TableRow align="left" key={row.ID}>
-                    {Object.values(row).map((value, index) => {
-                      return <TableCell key={index}>{value}</TableCell>;
-                    })}
-                  </TableRow>
-                );
-              })} */}
+              {data
+                .slice(1)
+                .slice(startIndex, endIndex)
+                .map((row) => {
+                  return (
+                    <TableRow align="left" key={row.ID}>
+                      {Object.values(row).map((value, index) => {
+                        return <TableCell key={index}>{value}</TableCell>;
+                      })}
+                    </TableRow>
+                  );
+                })}
             </TableBody>
           </Table>
         </TableContainer>
+      </div>
+      <div
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }}
+      >
+        <Stack spacing={2} direction="row" justifyContent="center" mt={2}>
+          <Pagination
+            count={Math.ceil(data.length / rowsPerPage)}
+            page={page}
+            onChange={handleChangePage}
+            variant="outlined"
+            shape="rounded"
+          />
+        </Stack>
       </div>
     </div>
   );
