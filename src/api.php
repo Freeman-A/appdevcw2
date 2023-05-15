@@ -2,6 +2,31 @@
 
     include "connection.php";
     
+    $db = new Database();
+    $connection = $db->getConnection(); 
+
+
+    $query = "SELECT * FROM records"; 
+    $result = mysqli_query($connection, $query); 
+
+if (!$result) {
+    $response = array (
+        'status' => 'error',
+        'message' => 'Query failed: ' . mysqli_error($connect)
+    );
+    
+    die("Query failed: " . mysqli_error($connect));
+}
+    $json_array = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $json_array[] = $row;
+    }
+    $response = array(
+        'status' => 'success',
+        'data' => $json_array
+    );
+
+echo json_encode($response); 
     // $claimant['ID'] = $row['ID'];
     // $claimant['KIDSDRIV'] = $row['KIDSDRIV'];
     // $claimant['BIRTH'] = $row['BIRTH'];

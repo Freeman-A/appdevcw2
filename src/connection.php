@@ -4,28 +4,23 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE'); // Allow the spe
 header('Access-Control-Allow-Headers: Content-Type'); // Allow the specified headers
 header('Content-Type: application/json');
 
-$connect = mysqli_connect("localhost", "root", "", "carinsurance") or die("Connection Failed: " . mysqli_connect_error()); 
-$query = "SELECT * FROM records"; 
-$result = mysqli_query($connect, $query); 
+class Database {
 
-if (!$result) {
-    $response = array (
-        'status' => 'error',
-        'message' => 'Query failed: ' . mysqli_error($connect)
-    );
-    
-    die("Query failed: " . mysqli_error($connect));
-}
-    $json_array = array();
-    while ($row = mysqli_fetch_assoc($result)) {
-        $json_array[] = $row;
+    private $host = "localhost"; 
+    private $user = "root"; #change this to phpmyadmin before deploying to azure vm
+    private $password = ""; #change this to AppDev@2021 before deploying
+    private $db = "carinsurance"; 
+
+    public function getConnection() {
+        $conn = new mysqli($this->host, $this->user, $this->password, $this->db);
+        if($conn->connect_error){
+            die("Error failed to connect to MySQL: " . $conn->connect_error);
+        }
+        else {
+            return $conn; 
+        }
     }
-    $response = array(
-        'status' => 'success',
-        'data' => $json_array
-    );
-
-echo json_encode($response); 
 
 
+}
 ?>
