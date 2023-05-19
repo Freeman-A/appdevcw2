@@ -24,7 +24,7 @@ function Manage() {
   useEffect(() => {
     const fetchData = async () => {
       setIsFetching(true);
-      const response = await fetch('http://localhost/src/api', {
+      const response = await fetch('http://localhost/src/api/records', {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -33,7 +33,6 @@ function Manage() {
       setData(data.data);
       setIsFetching(false);
     };
-
     fetchData();
   }, []);
 
