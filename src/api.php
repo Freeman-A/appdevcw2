@@ -12,27 +12,28 @@ spl_autoload_register(function ($class) {
 #get the exception handler to the class 
 set_exception_handler("ErrorHandler::handleException"); 
 
-#set the content type 
+#set the content type and other header options
+header('Access-Control-Allow-Headers: Content-Type');
 header("Content-type: application/json; charset-UTF-8");
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
 
-#get parts of the URL
-$parts = explode("/", $_SERVER["REQUEST_URI"]); 
+// #get parts of the URL
+// $url = rtrim($_SERVER["REQUEST_URI"], "/"); 
+// $url = filter_var($url, FILTER_SANITIZE_URL);  
+// $parts = explode("/", $url); 
 
-#check if the part of the URI is not records
-#return 404 if not
-if ($parts[3] != "records"){
-    http_response_code(404); 
-    exit;
-}
+$id = $_GET['ID'] ?? null; 
 
-$id = $parts[4] ?? null; 
+// foreach ($parts as $value){
+//  var_dump($value);}
+ 
+// var_dump($id); 
 
-#establish new database connection
+#establish new database object
 $database = new Database(); 
-$database->getConnection();
-
 #create an gateway object to pass through to the controller
-$gateway = new Gateway($database); 
+$gateway = new Gateway($database);
 
 #create new instance of the controller class to process request
 $controller = new Controller($gateway); 

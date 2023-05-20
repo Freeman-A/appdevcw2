@@ -17,20 +17,24 @@ function Manage() {
   const [isFetching, setIsFetching] = useState(true);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const rowsPerPage = 10;
+  const rowsPerPage = 100;
   const startIndex = (page - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
 
   useEffect(() => {
     const fetchData = async () => {
       setIsFetching(true);
-      const response = await fetch('http://localhost/src/api/records', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const response = await fetch('http://localhost:80/src/api/records', {
+        headers: {},
       });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
       const data = await response.json();
-      setData(data.data);
+
+      setData(data);
       setIsFetching(false);
     };
     fetchData();
