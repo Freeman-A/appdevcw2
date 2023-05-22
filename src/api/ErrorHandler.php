@@ -18,8 +18,7 @@ class ErrorHandler
         ]); 
 
 
-     }
-
+    }
 }
 
 ?>

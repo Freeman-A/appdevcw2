@@ -24,7 +24,8 @@ class Gateway {
 
     }
 
-    public function create(array $data){
+    public function create(array $data)
+    {
         $sql = "INSERT INTO records (ID,KIDSDRIV,BIRTH,AGE,HOMEKIDS,YOJ,INCOME,PARENT1,HOME_VAL,MSTATUS,GENDER,EDUCATION,OCCUPATION,TRAVTIME,CAR_USE,BLUEBOOK,TIF,CAR_TYPE,RED_CAR,OLDCLAIM,CLM_FREQ,REVOKED,MVR_PTS,CLM_AMT,CAR_AGE,CLAIM_FLAG,URBANICITY) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $this->conn->prepare($sql);
@@ -58,16 +59,110 @@ class Gateway {
         $data["CAR_AGE"],
         $data["CLAIM_FLAG"],
         $data["URBANICITY"]); 
-        
+
         $stmt->execute();
         return $data["ID"];
     }
+
+
+    public function get(int $id): array | null
+    {
+        #get record by id 
+        $sql = "SELECT * FROM records WHERE ID = ?"; 
+
+        $stmt = $this->conn->prepare($sql); 
+        $stmt->bind_param("i", $id); 
+
+        $stmt->execute(); 
+
+        $data = $stmt->get_result();
+
+        if($data->num_rows === 1){
+            $data = $data->fetch_assoc(); 
+        }
+        return $data; 
+    }
+
+    public function update(array $current, array $new): int
+    {
+
+        $id = $current["ID"]; 
+
+        $sql = "UPDATE records SET 
+        KIDSDRIV = ?,
+        BIRTH = ?,
+        AGE = ?,
+        HOMEKIDS = ?,
+        YOJ = ?,
+        INCOME = ?,
+        PARENT1 = ?,
+        HOME_VAL = ?,
+        MSTATUS = ?,
+        GENDER = ?,
+        EDUCATION = ?,
+        OCCUPATION = ?,
+        TRAVTIME = ?,
+        CAR_USE = ?,
+        BLUEBOOK = ?,
+        TIF = ?,
+        CAR_TYPE = ?,
+        RED_CAR = ?,
+        OLDCLAIM = ?,
+        CLM_FREQ = ?,
+        REVOKED = ?,
+        MVR_PTS = ?,
+        CLM_AMT = ?,
+        CAR_AGE = ?,
+        CLAIM_FLAG = ?,
+        URBANICITY = ?
+      WHERE ID = ?";
+      
+        $stmt = $this->conn->prepare($sql); 
+        $stmt->bind_param("isiiiisissssisiissiisiiiisi",
+        $new["KIDSDRIV"],
+        $new["BIRTH"], 
+        $new["AGE"], 
+        $new["HOMEKIDS"], 
+        $new["YOJ"], 
+        $new["INCOME"], 
+        $new["PARENT1"], 
+        $new["HOME_VAL"], 
+        $new["MSTATUS"], 
+        $new["GENDER"], 
+        $new["EDUCATION"], 
+        $new["OCCUPATION"], 
+        $new["TRAVTIME"], 
+        $new["CAR_USE"], 
+        $new["BLUEBOOK"], 
+        $new["TIF"], 
+        $new["CAR_TYPE"], 
+        $new["RED_CAR"], 
+        $new["OLDCLAIM"], 
+        $new["CLM_FREQ"],
+        $new["REVOKED"], 
+        $new["MVR_PTS"],
+        $new["CLM_AMT"],
+        $new["CAR_AGE"],
+        $new["CLAIM_FLAG"],
+        $new["URBANICITY"], 
+        $id); 
+        $stmt->execute(); 
+
+        
+    return $stmt->num_rows(); 
 }
 
+    public function delete(int $id): int {
+        $sql = "DELETE FROM records WHERE ID = ?"; 
 
+        $stmt = $this->conn->prepare($sql); 
+        $stmt->bind_param("i", $id);
 
+        $stmt->execute(); 
 
+        return $stmt->num_rows(); 
+    }
 
-
+}
 
 ?>

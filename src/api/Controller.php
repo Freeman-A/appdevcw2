@@ -3,28 +3,53 @@
 class Controller {
     #controller class used to change response content 
 
-
+    
     public function __construct(private Gateway $gateway)
     {
 
     }
 
+
     public function processReq(string $method, ?string $id): void 
     {
-        $this->processCollectionReq($method); 
-         
-        // if ($id ) {
-        //     $this->processResourceReq($method, $id); 
-        // }   else {
-        //     $this->processCollectionReq($method);
-        // }     
-    }
+        #handle the URL here pass in URL and then change the type of function that is run based on the URL and the METHOD 
 
+        if ($id != null & $method != "POST") {
+            $this->processResourceReq($method, $id); 
+        }   else {
+            $this->processCollectionReq($method);
+        } 
+
+            
+    }
 
     private function processResourceReq(string $method, string $id): void 
     {
 
+        $data = $this->gateway->get($id); 
+        
+
+        switch ($method){
+            case "GET": 
+                echo json_encode($data); 
+                break; 
+            case "PUT": 
+                $data = $_GET;
+
+                $id = $this->gateway->update($data, $data); 
+                break;
+            case "DELETE": 
+
+                $rows = $this->gateway->delete($id); 
+
+                echo json_encode([
+                    "message" => "Record at $id deleted",
+                    "rows" => $rows]);
+                    break;
+        }
     }
+
+
 
     private function processCollectionReq(string $method): void 
     {
@@ -35,25 +60,23 @@ class Controller {
                 break;
                 
             case "POST": 
-                $data = $_GET;
                 // Use $data to perform the necessary operations
-    
-                foreach ($data as $key => $value) {
-                    echo "$key: $value\n";
-                }
-                
+                $data = $_GET;
+
                 $id = $this->gateway->create($data); 
-                
-                echo json_encode([
-                    "message" => "record created", 
-                    "id" => $id 
-                ]); 
+
+                if ($id) {
+                    http_response_code(201); 
+                    echo json_encode([  
+                        "message" => "record created", 
+                        "id" => $id 
+                    ]); 
+                }
     
                 break;  
-            }
-            
+            }       
 
-        }
     }
+}
 
 ?> 

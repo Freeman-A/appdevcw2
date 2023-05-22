@@ -18,20 +18,11 @@ header("Content-type: application/json; charset-UTF-8");
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
 
-// #get parts of the URL
-// $url = rtrim($_SERVER["REQUEST_URI"], "/"); 
-// $url = filter_var($url, FILTER_SANITIZE_URL);  
-// $parts = explode("/", $url); 
-
 $id = $_GET['ID'] ?? null; 
-
-// foreach ($parts as $value){
-//  var_dump($value);}
- 
-// var_dump($id); 
 
 #establish new database object
 $database = new Database(); 
+
 #create an gateway object to pass through to the controller
 $gateway = new Gateway($database);
 

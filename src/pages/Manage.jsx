@@ -24,7 +24,7 @@ function Manage() {
   useEffect(() => {
     const fetchData = async () => {
       setIsFetching(true);
-      const response = await fetch('http://localhost:80/src/api/records', {
+      const response = await fetch('http://localhost/src/api/records', {
         headers: {},
       });
 
@@ -56,7 +56,6 @@ function Manage() {
     <div>
       <Navbar />
       <br />
-
       <br />
       <div>
         <TableContainer component={Paper}>
@@ -73,18 +72,15 @@ function Manage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data
-                .slice(1)
-                .slice(startIndex, endIndex)
-                .map((row) => {
-                  return (
-                    <TableRow align="left" key={row.ID}>
-                      {Object.values(row).map((value, index) => {
-                        return <TableCell key={index}>{value}</TableCell>;
-                      })}
-                    </TableRow>
-                  );
-                })}
+              {data.slice(startIndex, endIndex).map((row) => {
+                return (
+                  <TableRow align="left" key={row.ID}>
+                    {Object.values(row).map((value, index) => {
+                      return <TableCell key={index}>{value}</TableCell>;
+                    })}
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
