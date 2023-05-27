@@ -1,6 +1,4 @@
 <?php 
-
-
 declare(strict_types=1); 
 
 
@@ -12,7 +10,7 @@ spl_autoload_register(function ($class) {
 #get the exception handler to the class 
 set_exception_handler("ErrorHandler::handleException"); 
 
-#set the content type and other header options
+#set the content type    and other header options
 header('Access-Control-Allow-Headers: Content-Type');
 header("Content-type: application/json; charset-UTF-8");
 header('Access-Control-Allow-Origin: *');

@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Navbar from '../components/Navbar';
-import BasicModal from '../components/modal/Modal';
+import BasicModal from '../components/modal/BasicModal';
 
 function Manage() {
   const [isFetching, setIsFetching] = useState(true);
@@ -29,9 +29,7 @@ function Manage() {
   useEffect(() => {
     const fetchData = async () => {
       setIsFetching(true);
-      const response = await fetch('http://localhost/src/api/records', {
-        headers: {},
-      });
+      const response = await fetch('http://localhost/src/api/records');
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -59,8 +57,9 @@ function Manage() {
 
   return (
     <div>
-      <Navbar />
+      {<BasicModal open={open} setOpen={setOpen} selectedRow={selectedRow} />}
 
+      <Navbar />
       <br />
 
       <Container maxWidth={'xl'}>
@@ -68,46 +67,38 @@ function Manage() {
           <Table sx={{ maxWidth: 300 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell></TableCell> {/* Empty cell for the button column */}
-                {Object.keys(data[0]).map((key, index) => {
-                  return (
-                    <TableCell align="left" key={index}>
-                      {key}
-                    </TableCell>
-                  );
-                })}
+                <TableCell></TableCell>
+                {Object.keys(data[0]).map((key, index) => (
+                  <TableCell align="left" key={index}>
+                    {key}
+                  </TableCell>
+                ))}
               </TableRow>
             </TableHead>
             <TableBody>
-              <BasicModal
-                open={open}
-                setOpen={setOpen}
-                selectedRow={selectedRow}
-              />
-              {data.slice(startIndex, endIndex).map((row) => {
-                return (
-                  <TableRow align="left" key={row.ID}>
-                    <TableCell>
-                      <Button
-                        variant="contained"
-                        onClick={() => {
-                          setOpen(true);
-                          setSelectedRow(row);
-                        }}
-                      >
-                        Button
-                      </Button>
-                    </TableCell>
-                    {Object.values(row).map((value, index) => {
-                      return <TableCell key={index}>{value}</TableCell>;
-                    })}
-                  </TableRow>
-                );
-              })}
+              {data.slice(startIndex, endIndex).map((row) => (
+                <TableRow align="left" key={row.ID}>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      onClick={() => {
+                        setOpen(true);
+                        setSelectedRow(row);
+                      }}
+                    >
+                      Options
+                    </Button>
+                  </TableCell>
+                  {Object.values(row).map((value, index) => (
+                    <TableCell key={index}>{value}</TableCell>
+                  ))}
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
       </Container>
+
       <div
         style={{
           position: 'fixed',
