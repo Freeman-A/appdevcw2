@@ -11,9 +11,10 @@ import {
   Pagination,
   Button,
   Container,
+  Tooltip,
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/navbar/Navbar';
 import BasicModal from '../components/modal/BasicModal';
 
 function Manage() {
@@ -63,40 +64,42 @@ function Manage() {
       <br />
 
       <Container maxWidth={'xl'}>
-        <TableContainer component={Paper}>
-          <Table sx={{ maxWidth: 300 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell></TableCell>
-                {Object.keys(data[0]).map((key, index) => (
-                  <TableCell align="left" key={index}>
-                    {key}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.slice(startIndex, endIndex).map((row) => (
-                <TableRow align="left" key={row.ID}>
-                  <TableCell>
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        setOpen(true);
-                        setSelectedRow(row);
-                      }}
-                    >
-                      Options
-                    </Button>
-                  </TableCell>
-                  {Object.values(row).map((value, index) => (
-                    <TableCell key={index}>{value}</TableCell>
+        <Tooltip title="Middle Mouse and drag to scroll" placement="bottom">
+          <TableContainer component={Paper}>
+            <Table sx={{ maxWidth: 300 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell></TableCell>
+                  {Object.keys(data[0]).map((key, index) => (
+                    <TableCell align="left" key={index}>
+                      {key}
+                    </TableCell>
                   ))}
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {data.slice(startIndex, endIndex).map((row) => (
+                  <TableRow align="left" key={row.ID}>
+                    <TableCell>
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          setOpen(true);
+                          setSelectedRow(row);
+                        }}
+                      >
+                        Options
+                      </Button>
+                    </TableCell>
+                    {Object.values(row).map((value, index) => (
+                      <TableCell key={index}>{value}</TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Tooltip>
       </Container>
 
       <div

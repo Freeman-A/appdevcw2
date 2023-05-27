@@ -1,5 +1,15 @@
 import { useState } from 'react';
-import { Box, Modal, Button, Stack } from '@mui/material';
+import {
+  Box,
+  Modal,
+  Button,
+  Stack,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+} from '@mui/material';
 
 const style = {
   position: 'absolute',
@@ -15,6 +25,13 @@ const style = {
 
 export default function BasicModal({ open, setOpen, selectedRow }) {
   const [isFetching, setIsFetching] = useState(true);
+  const [opened, setOpened] = useState(false);
+  const [record, setRecord] = useState([]);
+
+  if (!selectedRow) {
+    return;
+  }
+
   const deleteRecord = async () => {
     setIsFetching(true);
     const response = await fetch(
@@ -23,18 +40,58 @@ export default function BasicModal({ open, setOpen, selectedRow }) {
         method: 'DELETE',
       }
     );
-    const data = await response.json();
 
     setIsFetching(false);
     window.location.reload();
   };
 
-  if (!selectedRow) {
-    return;
-  }
+  const getRecordById = async () => {
+    const response = await fetch(
+      `http://localhost/src/api/records?ID=${selectedRow.ID}`,
+      {
+        method: 'GET',
+      }
+    );
+    const data = await response.json();
+    setRecord(data);
+    return data;
+  };
 
   return (
     <div>
+      <Dialog
+        open={opened}
+        onClose={() => {
+          setOpened(false);
+          setOpen(false);
+        }}
+      >
+        <DialogTitle>{`Record For User: ${record.ID}`}</DialogTitle>
+
+        <DialogContent>
+          <DialogContentText>
+            Enter Values that you wish to update
+          </DialogContentText>
+          {Object.keys(record)
+            .slice(1)
+            .map((key) => {
+              return (
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  label={`${key}`}
+                  value={record[key]}
+                  onChange={() => {}}
+                  fullWidth
+                  variant="standard"
+                />
+              );
+            })}
+        </DialogContent>
+        <Button variant="contained" sx={{ height: '50%' }}>
+          {'Submit'}
+        </Button>
+      </Dialog>
       <Modal
         open={open}
         onClose={() => setOpen(!open)}
@@ -51,7 +108,15 @@ export default function BasicModal({ open, setOpen, selectedRow }) {
             >
               Delete
             </Button>
-            <Button variant="contained">Edit</Button>
+            <Button
+              variant="contained"
+              onClick={() => {
+                setOpened(true);
+                getRecordById();
+              }}
+            >
+              Edit
+            </Button>
           </Stack>
         </Box>
       </Modal>
