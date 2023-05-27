@@ -9,14 +9,19 @@ import {
   Paper,
   Stack,
   Pagination,
+  Button,
+  Container,
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Navbar from '../components/Navbar';
+import BasicModal from '../components/modal/Modal';
 
 function Manage() {
   const [isFetching, setIsFetching] = useState(true);
+  const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
+  const [selectedRow, setSelectedRow] = useState(null);
   const rowsPerPage = 100;
   const startIndex = (page - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
@@ -55,13 +60,15 @@ function Manage() {
   return (
     <div>
       <Navbar />
+
       <br />
-      <br />
-      <div>
+
+      <Container maxWidth={'xl'}>
         <TableContainer component={Paper}>
           <Table sx={{ maxWidth: 300 }} aria-label="simple table">
             <TableHead>
               <TableRow>
+                <TableCell></TableCell> {/* Empty cell for the button column */}
                 {Object.keys(data[0]).map((key, index) => {
                   return (
                     <TableCell align="left" key={index}>
@@ -72,9 +79,25 @@ function Manage() {
               </TableRow>
             </TableHead>
             <TableBody>
+              <BasicModal
+                open={open}
+                setOpen={setOpen}
+                selectedRow={selectedRow}
+              />
               {data.slice(startIndex, endIndex).map((row) => {
                 return (
                   <TableRow align="left" key={row.ID}>
+                    <TableCell>
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          setOpen(true);
+                          setSelectedRow(row);
+                        }}
+                      >
+                        Button
+                      </Button>
+                    </TableCell>
                     {Object.values(row).map((value, index) => {
                       return <TableCell key={index}>{value}</TableCell>;
                     })}
@@ -84,7 +107,7 @@ function Manage() {
             </TableBody>
           </Table>
         </TableContainer>
-      </div>
+      </Container>
       <div
         style={{
           position: 'fixed',
