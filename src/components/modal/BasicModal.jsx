@@ -57,6 +57,28 @@ export default function BasicModal({ open, setOpen, selectedRow }) {
     return data;
   };
 
+  const handleInputChange = (event, key) => {
+    setRecord({
+      ...record,
+      [key]: event.target.value,
+    });
+  };
+
+  const handleSubmitData = async () => {
+    console.log(record);
+    const response = await fetch(
+      `http://localhost/src/api/records?ID=${selectedRow.ID}`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(record),
+      }
+    );
+
+    console.log(response);
+    setOpened(false);
+    setOpen(false);
+  };
+
   return (
     <div>
       <Dialog
@@ -81,14 +103,20 @@ export default function BasicModal({ open, setOpen, selectedRow }) {
                   margin="dense"
                   label={`${key}`}
                   value={record[key]}
-                  onChange={() => {}}
+                  onChange={(event) => {
+                    handleInputChange(event, key);
+                  }}
                   fullWidth
                   variant="standard"
                 />
               );
             })}
         </DialogContent>
-        <Button variant="contained" sx={{ height: '50%' }}>
+        <Button
+          variant="contained"
+          sx={{ height: '50%' }}
+          onClick={() => handleSubmitData()}
+        >
           {'Submit'}
         </Button>
       </Dialog>

@@ -35,8 +35,10 @@ class Controller {
                 break; 
             case "PUT": 
                 $data = $_GET;
+                $requestData = json_decode(file_get_contents('php://input'), true); 
 
-                $id = $this->gateway->update($data, $data); 
+                $id = $this->gateway->update($data, $requestData); 
+
                 break;
             case "DELETE": 
 

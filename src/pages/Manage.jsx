@@ -64,7 +64,7 @@ function Manage() {
       <br />
 
       <Container maxWidth={'xl'}>
-        <Tooltip title="Middle Mouse and drag to scroll" placement="bottom">
+        <Tooltip title="Middle Mouse and drag to scroll" placement="top">
           <TableContainer component={Paper}>
             <Table sx={{ maxWidth: 300 }} aria-label="simple table">
               <TableHead>

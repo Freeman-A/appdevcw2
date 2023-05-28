@@ -118,7 +118,7 @@ class Gateway {
       WHERE ID = ?";
       
         $stmt = $this->conn->prepare($sql); 
-        $stmt->bind_param("isiiiisissssisiissiisiiiisi",
+        $stmt->bind_param("isiissssssssissssssisisiss",
         $new["KIDSDRIV"],
         $new["BIRTH"], 
         $new["AGE"], 
