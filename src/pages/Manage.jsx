@@ -16,10 +16,12 @@ import {
 import LoadingButton from '@mui/lab/LoadingButton';
 import Navbar from '../components/navbar/Navbar';
 import BasicModal from '../components/modal/BasicModal';
+import AddRecordModal from '../components/modal/AddRecordModal';
 
 function Manage() {
   const [isFetching, setIsFetching] = useState(true);
   const [open, setOpen] = useState(false);
+  const [opened, setOpened] = useState(false);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -58,12 +60,16 @@ function Manage() {
 
   return (
     <div>
-      {<BasicModal open={open} setOpen={setOpen} selectedRow={selectedRow} />}
+      <BasicModal open={open} setOpen={setOpen} selectedRow={selectedRow} />
+      <AddRecordModal open={opened} setOpen={setOpened} />
 
       <Navbar />
       <br />
 
       <Container maxWidth={'xl'}>
+        <Button onClick={() => setOpened(true)} variant="contained">
+          Add record
+        </Button>
         <Tooltip title="Middle Mouse and drag to scroll" placement="top">
           <TableContainer component={Paper}>
             <Table sx={{ maxWidth: 300 }} aria-label="simple table">

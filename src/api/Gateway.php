@@ -26,13 +26,12 @@ class Gateway {
 
     public function create(array $data)
     {
-        $sql = "INSERT INTO records (ID,KIDSDRIV,BIRTH,AGE,HOMEKIDS,YOJ,INCOME,PARENT1,HOME_VAL,MSTATUS,GENDER,EDUCATION,OCCUPATION,TRAVTIME,CAR_USE,BLUEBOOK,TIF,CAR_TYPE,RED_CAR,OLDCLAIM,CLM_FREQ,REVOKED,MVR_PTS,CLM_AMT,CAR_AGE,CLAIM_FLAG,URBANICITY) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO records (KIDSDRIV,BIRTH,AGE,HOMEKIDS,YOJ,INCOME,PARENT1,HOME_VAL,MSTATUS,GENDER,EDUCATION,OCCUPATION,TRAVTIME,CAR_USE,BLUEBOOK,TIF,CAR_TYPE,RED_CAR,OLDCLAIM,CLM_FREQ,REVOKED,MVR_PTS,CLM_AMT,CAR_AGE,CLAIM_FLAG,URBANICITY) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $this->conn->prepare($sql);
         
         # bind the values to variables to prevent SQL injection
-        $stmt->bind_param("iisiiiisissssisiissiisiiiis", 
-        $data["ID"], 
+        $stmt->bind_param("isiissssssssissssssisisiss", 
         $data["KIDSDRIV"],
         $data["BIRTH"], 
         $data["AGE"], 
@@ -61,7 +60,7 @@ class Gateway {
         $data["URBANICITY"]); 
 
         $stmt->execute();
-        return $data["ID"];
+        return $stmt->insert_id;
     }
 
 
@@ -118,7 +117,7 @@ class Gateway {
       WHERE ID = ?";
       
         $stmt = $this->conn->prepare($sql); 
-        $stmt->bind_param("isiissssssssissssssisisiss",
+        $stmt->bind_param("isiissssssssissssssisisissi",
         $new["KIDSDRIV"],
         $new["BIRTH"], 
         $new["AGE"], 

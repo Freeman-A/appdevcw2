@@ -65,7 +65,6 @@ export default function BasicModal({ open, setOpen, selectedRow }) {
   };
 
   const handleSubmitData = async () => {
-    console.log(record);
     const response = await fetch(
       `http://localhost/src/api/records?ID=${selectedRow.ID}`,
       {
@@ -96,12 +95,13 @@ export default function BasicModal({ open, setOpen, selectedRow }) {
           </DialogContentText>
           {Object.keys(record)
             .slice(1)
-            .map((key) => {
+            .map((key, index) => {
               return (
                 <TextField
                   autoFocus
                   margin="dense"
                   label={`${key}`}
+                  key={index}
                   value={record[key]}
                   onChange={(event) => {
                     handleInputChange(event, key);

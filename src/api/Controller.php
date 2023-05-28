@@ -63,15 +63,17 @@ class Controller {
                 
             case "POST": 
                 // Use $data to perform the necessary operations
-                $data = $_GET;
+                $data = json_decode(file_get_contents('php://input'), true);
 
+                echo json_encode($data); 
+                
                 $id = $this->gateway->create($data); 
 
                 if ($id) {
-                    http_response_code(201); 
+                    http_response_code(201);  
                     echo json_encode([  
                         "message" => "record created", 
-                        "id" => $id 
+                        "id" => $id
                     ]); 
                 }
     
