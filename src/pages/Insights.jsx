@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import Navbar from '../components/navbar/Navbar';
 import GenderRedCarRatio from '../components/charts/GenderRedCarRatio';
-import { Box, Container, Paper } from '@mui/material';
+import PieChartKidsdrivers from '../components/charts/PieChartKidsdrivers';
+import { Paper, Grid, Container } from '@mui/material';
 
 function Insights() {
   const [isFetching, setIsFetching] = useState(true);
@@ -26,21 +27,25 @@ function Insights() {
 
   return (
     <>
-      <Paper elevation={12} square>
+      <Paper elevation={4} square>
         <Navbar />
-
-        <Container
-          sx={{
-            backgroundColor: '#333333',
-            borderRadius: 5,
-            float: 'left',
-            margin: 5,
-          }}
-          maxWidth={'sm'}
-        >
-          <GenderRedCarRatio data={data} />
-        </Container>
       </Paper>
+
+      <br />
+
+      <Grid
+        container
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="flex-start"
+      >
+        <Grid item xs={4}>
+          <GenderRedCarRatio data={data} />
+        </Grid>
+        <Grid item xs={4}>
+          <PieChartKidsdrivers data={data} />
+        </Grid>
+      </Grid>
     </>
   );
 }

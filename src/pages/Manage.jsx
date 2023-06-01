@@ -63,7 +63,10 @@ function Manage() {
       <BasicModal open={open} setOpen={setOpen} selectedRow={selectedRow} />
       <AddRecordModal open={opened} setOpen={setOpened} />
 
-      <Navbar />
+      <Paper elevation={4} square>
+        <Navbar />
+      </Paper>
+
       <br />
 
       <Container maxWidth={'xl'}>
