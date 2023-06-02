@@ -13,34 +13,38 @@ export default function PieChartKidsdrivers(data) {
       },
       title: {
         display: true,
-        text: 'Men & Women with Kid drivers',
+        text: 'Ratio of Men & Women with/out kid drivers ',
       },
     },
   };
   const chartData = {
+    labels: ['Male With', 'Female With', 'Female Wihout', 'Male Without'],
     datasets: [
       {
-        label: 'Male',
+        label: 'Number of Kids drivers',
         data: [
           data.data.reduce((total, row) => {
             if (row.GENDER === 'M' && row.KIDSDRIV > 0) return total + 1;
 
             return total;
           }, 0),
-        ],
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-        borderWidth: 1,
-      },
-      {
-        label: 'Female',
-        data: [
           data.data.reduce((total, row) => {
             if (row.GENDER === 'z_F' && row.KIDSDRIV > 0) return total + 1;
 
             return total;
           }, 0),
+          data.data.reduce((total, row) => {
+            if (row.GENDER === 'z_F' && row.KIDSDRIV == 0) return total + 1;
+
+            return total;
+          }, 0),
+          data.data.reduce((total, row) => {
+            if (row.GENDER === 'M' && row.KIDSDRIV == 0) return total + 1;
+
+            return total;
+          }, 0),
         ],
-        backgroundColor: 'pink',
+        backgroundColor: ['lightBlue', 'pink', '#e75480', '#0096f2'],
         borderWidth: 1,
       },
     ],

@@ -42,7 +42,7 @@ function Insights() {
         <Grid item xs={4}>
           <GenderRedCarRatio data={data} />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={4} sx={{ width: 350, height: 350 }}>
           <PieChartKidsdrivers data={data} />
         </Grid>
       </Grid>
