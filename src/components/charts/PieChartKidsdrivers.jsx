@@ -21,7 +21,7 @@ export default function PieChartKidsdrivers(data) {
     labels: ['Male With', 'Female With', 'Female Wihout', 'Male Without'],
     datasets: [
       {
-        label: 'Number of Kids drivers',
+        label: 'Number of Kid drivers',
         data: [
           data.data.reduce((total, row) => {
             if (row.GENDER === 'M' && row.KIDSDRIV > 0) return total + 1;

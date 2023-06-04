@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react';
 import Navbar from '../components/navbar/Navbar';
 import GenderRedCarRatio from '../components/charts/GenderRedCarRatio';
 import PieChartKidsdrivers from '../components/charts/PieChartKidsdrivers';
-import { Paper, Grid, Container } from '@mui/material';
+import { Paper, Grid, Container, Box } from '@mui/material';
+import CarTypeRadar from '../components/charts/CarTypeRadar';
+import Homevalue from '../components/charts/HomeValue';
+import CustomizableChart from '../components/charts/CustomizableChart';
 
 function Insights() {
   const [isFetching, setIsFetching] = useState(true);
@@ -33,19 +36,43 @@ function Insights() {
 
       <br />
 
-      <Grid
-        container
-        direction="row"
-        justifyContent="flex-start"
-        alignItems="flex-start"
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid
+          container
+          sx={{
+            margin: 10,
+            padding: 10,
+            borderRadius: 2,
+            maxWidth: '90%',
+            maxHeight: 1000,
+            border: 1,
+          }}
+        >
+          <Grid item xs={4} height={350}>
+            <GenderRedCarRatio data={data} />
+          </Grid>
+          <Grid item xs={4} height={350}>
+            <PieChartKidsdrivers data={data} />
+          </Grid>
+          <Grid item xs={4} height={350}>
+            <CarTypeRadar data={data} />
+          </Grid>
+          <Grid item xs={4}>
+            <Homevalue data={data} />
+          </Grid>
+        </Grid>
+      </Box>
+      <Box
+        sx={{
+          margin: 10,
+          maxWidth: 1200,
+          padding: 10,
+          borderRadius: 2,
+          border: 1,
+        }}
       >
-        <Grid item xs={4}>
-          <GenderRedCarRatio data={data} />
-        </Grid>
-        <Grid item xs={4} sx={{ width: 350, height: 350 }}>
-          <PieChartKidsdrivers data={data} />
-        </Grid>
-      </Grid>
+        {<CustomizableChart />}
+      </Box>
     </>
   );
 }
