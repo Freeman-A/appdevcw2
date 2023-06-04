@@ -1,14 +1,27 @@
 import React from 'react';
 import { Bar, Line, Pie } from 'react-chartjs-2';
 
-const ChartComponent = ({ selectedChart }) => {
+const ChartComponent = ({
+  selectedChart,
+  selectedFilter,
+  filterOptions,
+  data,
+  sliderValue,
+}) => {
   const chartData = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: [`${filterOptions} ${sliderValue}`],
     datasets: [
       {
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: ['red', 'blue', 'yellow', 'green', 'purple', 'orange'],
+        label: `${selectedFilter} ${selectedChart} ${filterOptions} ${sliderValue}`,
+        data: [
+          data.data.reduce((total, row) => {
+            row[selectedFilter] = Number(row[selectedFilter]);
+            if (row[selectedFilter] == sliderValue) return total + 1;
+
+            return total;
+          }, 0),
+        ],
+        backgroundColor: 'red',
       },
     ],
   };

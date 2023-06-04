@@ -51,7 +51,6 @@ export default function Homevalue(data) {
 
             if (row.EDUCATION === 'PhD') return total + value;
 
-            console.log(total);
             return total;
           }, 0),
           data.data.reduce((total, row) => {
@@ -64,7 +63,6 @@ export default function Homevalue(data) {
 
             if (row.EDUCATION === 'Masters') return total + value;
 
-            console.log(total);
             return total;
           }, 0),
           data.data.reduce((total, row) => {
@@ -77,7 +75,6 @@ export default function Homevalue(data) {
 
             if (row.EDUCATION === 'Bachelors') return total + value;
 
-            console.log(total);
             return total;
           }, 0),
           data.data.reduce((total, row) => {
@@ -90,7 +87,6 @@ export default function Homevalue(data) {
 
             if (row.EDUCATION === 'z_High School') return total + value;
 
-            console.log(total);
             return total;
           }, 0),
         ],
@@ -108,7 +104,6 @@ export default function Homevalue(data) {
 
             if (row.EDUCATION === 'PhD') return total + value;
 
-            console.log(total);
             return total;
           }, 0),
           data.data.reduce((total, row) => {
@@ -119,7 +114,6 @@ export default function Homevalue(data) {
 
             if (row.EDUCATION === 'Masters') return total + value;
 
-            console.log(total);
             return total;
           }, 0),
           data.data.reduce((total, row) => {
@@ -130,7 +124,6 @@ export default function Homevalue(data) {
 
             if (row.EDUCATION === 'Bachelors') return total + value;
 
-            console.log(total);
             return total;
           }, 0),
           data.data.reduce((total, row) => {
@@ -141,7 +134,6 @@ export default function Homevalue(data) {
 
             if (row.EDUCATION === 'z_High School') return total + value;
 
-            console.log(total);
             return total;
           }, 0),
         ],

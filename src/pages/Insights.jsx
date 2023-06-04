@@ -71,7 +71,7 @@ function Insights() {
           border: 1,
         }}
       >
-        {<CustomizableChart />}
+        {<CustomizableChart data={data} />}
       </Box>
     </>
   );

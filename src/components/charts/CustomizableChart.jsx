@@ -1,35 +1,66 @@
 import { useState } from 'react';
-import ChartSelector from '../helpers/Chartselector.jsx';
 import ChartComponent from '../helpers/ChartComponent.jsx';
-import { Box } from '@mui/material';
-const types = [
-  'Bar',
-  'Line',
-  'Pie',
-  'Doughnut',
-  'PolarArea',
-  'Radar',
-  'Scatter',
-  'Bubble',
-  'Chart',
-];
+import ChartSelector from '../helpers/ChartSelector.jsx';
+import FilterSelector from '../helpers/FilterSelector.jsx';
+import FilterOptions from '../helpers/FilterOptions.jsx';
+import { Box, Stack, Slider } from '@mui/material';
 
 export default function CustomizableChart(data) {
   const [selectedChart, setSelectedChart] = useState('bar');
+  const [selectedFilter, setSelectedFilter] = useState('age');
+  const [selectedFilterOption, setFilterOption] = useState('age');
+  const [value, setValue] = useState(30);
 
-  const handleChange = (event) => {
+  const handleChartChange = (event) => {
     setSelectedChart(event.target.value);
+  };
+
+  const handleFilterChange = (event) => {
+    setSelectedFilter(event.target.value);
+  };
+
+  const handleFilterOptionChange = (event) => {
+    setFilterOption(event.target.value);
+  };
+
+  const handleSliderChange = (event) => {
+    setValue(event.target.value);
   };
 
   return (
     <>
       <Box>
-        <ChartSelector
-          selectedChart={selectedChart}
-          handleChange={handleChange}
-        />
+        <Stack direction="row" spacing={2}>
+          <ChartSelector
+            selectedChart={selectedChart}
+            handleChange={handleChartChange}
+          />
+          <FilterSelector
+            selectedFilter={selectedFilter}
+            handleChange={handleFilterChange}
+          />
+          <FilterOptions
+            selectedFilterOption={selectedFilterOption}
+            handleChange={handleFilterOptionChange}
+          />
+          {selectedFilterOption === 'age' ? (
+            <Slider
+              sx={{ width: 100 }}
+              value={typeof value === 'number' ? value : 0}
+              onChange={handleSliderChange}
+              aria-labelledby="input-slider"
+            ></Slider>
+          ) : null}
+        </Stack>
       </Box>
-      <ChartComponent selectedChart={selectedChart} />
+
+      <ChartComponent
+        selectedChart={selectedChart}
+        selectedFilter={selectedFilter}
+        filterOptions={selectedFilterOption}
+        data={data}
+        sliderValue={value}
+      />
     </>
   );
 }
